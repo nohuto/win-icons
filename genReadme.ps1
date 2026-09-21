@@ -13,7 +13,8 @@ foreach ($f in $folders) {
             $icon = $icons[$i + $j]
             $path = $icon.FullName.Substring($PSScriptRoot.Length + 1).Replace('\', '/')
             $url = ($path.Split('/') | % { [Uri]::EscapeDataString($_) }) -join '/'
-            "<img src=`"$url`" width=`"48`">"
+            $name = [Net.WebUtility]::HtmlEncode($icon.Name).Replace('|', '&#124;')
+            "<a href=`"$url`"><img src=`"$url`" width=`"48`" alt=`"$name`"><br><sub>$name</sub></a>"
         }
         $lines += '| ' + ($cells -join ' | ') + ' |'
     }
